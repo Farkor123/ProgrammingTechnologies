@@ -1,0 +1,6 @@
+C:\Users\Farkor123\source\repos\TP\TP\bin\Debug\TP.dll
+C:\Users\Farkor123\source\repos\TP\TP\bin\Debug\TP.pdb
+C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.csprojResolveAssemblyReference.cache
+C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.csproj.CoreCompileInputs.cache
+C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.dll
+C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.pdb
