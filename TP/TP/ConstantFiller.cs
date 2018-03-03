@@ -25,16 +25,16 @@
             }
 
             //Clients
-            context.clientList.Add(new Client("John", "Shepard"));
-            context.clientList.Add(new Client("Kaidan", "Alenko"));
-            context.clientList.Add(new Client("Ashley", "Williams"));
-            context.clientList.Add(new Client("Garrus", "Vakarian"));
-            context.clientList.Add(new Client("Wrex", "Urdnot"));
-            context.clientList.Add(new Client("Mordin", "Solus"));
-            context.clientList.Add(new Client("Liara", "T'Soni"));
-            context.clientList.Add(new Client("Tali", "Zorah"));
-            context.clientList.Add(new Client("Thane", "Krios"));
-            context.clientList.Add(new Client("Miranda", "Lawson"));
+            context.clientList.Add(new Client("John", "Shepard", "1"));
+            context.clientList.Add(new Client("Kaidan", "Alenko", "2"));
+            context.clientList.Add(new Client("Ashley", "Williams", "3"));
+            context.clientList.Add(new Client("Garrus", "Vakarian", "4"));
+            context.clientList.Add(new Client("Wrex", "Urdnot", "5"));
+            context.clientList.Add(new Client("Mordin", "Solus", "6"));
+            context.clientList.Add(new Client("Liara", "T'Soni", "7"));
+            context.clientList.Add(new Client("Tali", "Zorah", "8"));
+            context.clientList.Add(new Client("Thane", "Krios", "9"));
+            context.clientList.Add(new Client("Miranda", "Lawson", "10"));
 
             //Events
             for (int i = 0; i < 10; i++)

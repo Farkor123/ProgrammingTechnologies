@@ -59,6 +59,25 @@ namespace TP
             dataContext.bookDictionary.Remove(id);
         }
 
+        public void DeleteBook(Book book)
+        {
+            foreach (var book2 in dataContext.bookConditionList)
+            {
+                if (book == book2.Book)
+                {
+                    throw new Exception("You can't delete this object as it's being reffered to in other class.");
+                }
+            }
+            for(int id = 0; id < dataContext.bookDictionary.Count; id++)
+            {
+                if(dataContext.bookDictionary[id] == book)
+                {
+                    dataContext.bookDictionary.Remove(id);
+                    return;
+                }
+            }
+        }
+
         #endregion bookControl
 
         #region bookCondiotionControl
@@ -68,12 +87,104 @@ namespace TP
 
         #region clientControl
 
+        public void AddClient(Client client)
+        {
+            dataContext.clientList.Add(client);
+        }
+
+        public Client GetClient(string _id)
+        {
+            foreach(var client in dataContext.clientList)
+            {
+                if (client.ID == _id)
+                {
+                    return client;
+                }
+            }
+            throw new Exception("No such client.");
+        }
+
+        public IEnumerable<Client> GetAllClients()
+        {
+            return dataContext.clientList;
+        }
+
+        public int GetClientsAmount()
+        {
+            return dataContext.clientList.Count;
+        }
+
+        public void DeleteClient(Client client)
+        {
+            foreach (var clientt in dataContext.clientList)
+            {
+                if (clientt == client)
+                {
+                    dataContext.clientList.Remove(client);
+                    return;
+                }
+            }
+            throw new Exception("No such client.");
+        }
+
+        public void DeleteClient(string _id)
+        {
+            foreach (var client in dataContext.clientList)
+            {
+                if (client.ID == _id)
+                {
+                    dataContext.clientList.Remove(client);
+                    return;
+                }
+            }
+            throw new Exception("No such client.");
+        }
 
         #endregion clientControl
 
         #region eventControl
 
+        public void AddEvent(Event @event)
+        {
+            dataContext.eventObservableCollection.Add(@event);
+        }
 
+        public Event GetEvent(int id)
+        {
+            return dataContext.eventObservableCollection[id];
+        }
+
+        public IEnumerable<Event> GetAllEvents()
+        {
+            return dataContext.eventObservableCollection;
+        }
+
+        public int GetEventsAmount()
+        {
+            return dataContext.eventObservableCollection.Count;
+        }
+
+        public void DeleteEvent(Event @event)
+        {
+            foreach (var @eventt in dataContext.eventObservableCollection)
+            {
+                if (@eventt == @event)
+                {
+                    dataContext.eventObservableCollection.Remove(@event);
+                    return;
+                }
+            }
+            throw new Exception("No such event.");
+        }
+
+        public void DeleteEvent(int _id)
+        {
+            if(_id >= GetEventsAmount())
+            {
+                throw new Exception("No such event.");
+            }
+            dataContext.eventObservableCollection.Remove(dataContext.eventObservableCollection[_id]);
+        }
 
         #endregion eventControl
     }
