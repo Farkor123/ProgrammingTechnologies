@@ -45,6 +45,7 @@
     <Compile Include="ConstantFiller.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="DataRepository.cs" />
+    <Compile Include="DataService.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="IDataFiller.cs" />
