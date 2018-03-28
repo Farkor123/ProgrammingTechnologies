@@ -7,17 +7,25 @@ namespace TP
     {
         private DataContext dataContext;
         private IDataFiller filler;
+        public delegate void MyDelegate();
+        public event MyDelegate OnEventChanged;
 
         public DataRepository(DataContext dc, IDataFiller idf)
         {
             filler = idf;
             dataContext = dc;
+            dataContext.eventObservableCollection.CollectionChanged += (sender, e) =>
+            {
+                OnEventChanged?.Invoke();
+            };
         }
 
         public void UseFiller()
         {
             filler.Fill(dataContext);
         }
+
+        public IDataFiller Filler { get => filler; set => filler = value; }
 
         //C.R.U.D.
         #region bookControl
@@ -81,8 +89,48 @@ namespace TP
         #endregion bookControl
 
         #region bookCondiotionControl
-
-
+        public void AddBookCondition(BookCondition bc)
+        {
+            dataContext.bookConditionList.Add(bc);
+        }
+        public BookCondition GetBookCondition(int key)
+        {
+            return dataContext.bookConditionList[key];
+        }
+        public IEnumerable<BookCondition> GetAllBooksConditions()
+        {
+            return dataContext.bookConditionList;
+        }
+        public int GetBooksCondiotionsAmount()
+        {
+            return dataContext.bookConditionList.Count;
+        }
+        public void UpdateBookCondition(int key, BookCondition bc)
+        {
+            dataContext.bookConditionList[key] = bc;
+        }
+        public void DeleteBookCondition(int key)
+        {
+            foreach (var eventt in dataContext.eventObservableCollection)
+            {
+                if (eventt.BookCondition == dataContext.bookConditionList[key])
+                {
+                    throw new Exception("Can't delete this object as another one refers to it.");
+                }
+            }
+            dataContext.bookConditionList.Remove(dataContext.bookConditionList[key]);
+        }
+        public void DeleteBookCondition(BookCondition bc)
+        {
+            foreach (var eventt in dataContext.eventObservableCollection)
+            {
+                if (eventt.BookCondition == bc)
+                {
+                    throw new Exception("Can't delete this object as another one refers to it.");
+                }
+            }
+            dataContext.bookConditionList.Remove(bc);
+        }
         #endregion bookConditionControl
 
         #region clientControl
@@ -103,7 +151,10 @@ namespace TP
             }
             throw new Exception("No such client.");
         }
-
+        public Client GetClient(int key)
+        {
+            return dataContext.clientList[key];
+        }
         public IEnumerable<Client> GetAllClients()
         {
             return dataContext.clientList;
