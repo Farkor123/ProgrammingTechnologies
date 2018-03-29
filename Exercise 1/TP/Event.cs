@@ -20,8 +20,8 @@ namespace TP
 
         public Event(Type _action, BookCondition _bookCondition, Client _client)
         {
-            Action = _action;
             BookCondition = _bookCondition;
+            Action = _action;
             Client = _client;
             Date = DateTime.Now;
         }
@@ -31,10 +31,13 @@ namespace TP
             get => action;
             set
             {
+                Console.WriteLine(value);
                 switch(value)
                 {
                     case Type.Borrow:
-                        BookCondition.Condition = BookCondition.Conditions.Unavailable;
+                        var x = BookCondition.Conditions.Unavailable;
+                        Console.WriteLine(BookCondition);
+                        BookCondition.Condition = x;//BookCondition.Conditions.Unavailable;
                         break;
                     case Type.Return:
                         BookCondition.Condition = BookCondition.Conditions.Available;

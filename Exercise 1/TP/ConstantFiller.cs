@@ -1,4 +1,5 @@
-﻿namespace TP
+﻿using System;
+namespace TP
 {
     public class ConstantFiller : IDataFiller
     {
