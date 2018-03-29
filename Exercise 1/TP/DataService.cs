@@ -1,5 +1,6 @@
 ﻿using static TP.DataRepository;
 using System.Collections.Generic;
+using System;
 
 namespace TP
 {
@@ -11,9 +12,13 @@ namespace TP
         public DataService(DataRepository _repository)
         {
             repository = _repository;
-            repository.OnEventChanged += () =>
+            repository.OnEventChanged += (args) =>
             {
-                OnEventChanged?.Invoke();
+                OnEventChanged?.Invoke(args);
+            };
+            OnEventChanged = (args) =>
+            {
+                Console.WriteLine(args);
             };
         }
 
@@ -138,10 +143,63 @@ namespace TP
             repository.AddClient(newClient);
             return newClient;
         }
-        public Event CreateEvent()
+        public Event CreateEvent(Event.Type _action, BookCondition _bookCondition, Client _client)
         {
-
+            Event newEvent = new Event(_action, _bookCondition, _client);
+            repository.AddEvent(newEvent);
+            return newEvent;
         }
         #endregion Creators
+        #region Searchers
+        public IEnumerable<Event> SearchEventsOfClient(Client client)
+        {
+            foreach (var ev in repository.GetAllEvents())
+            {
+                if (ev.Client == client)
+                {
+                    yield return ev;
+                }
+            }
+        }
+        public IEnumerable<Event> SearchEventsBetween(DateTime since, DateTime until)
+        {
+            foreach (var ev in repository.GetAllEvents())
+            {
+                if (ev.Date >= since && ev.Date <= until)
+                {
+                    yield return ev;
+                }
+            }
+        }
+        public IEnumerable<Book> SearchAvailableBooks()
+        {
+            foreach (var condition in repository.GetAllBooksConditions())
+            {
+                if (condition.Condition == BookCondition.Conditions.Available) yield return condition.Book;
+            }
+        }
+        #endregion Searchers
+        #region Deleters
+        public void DeleteClient(string id)
+        {
+            repository.DeleteClient(id);
+        }
+        public void DeleteBook(int key)
+        {
+            repository.DeleteBook(key);
+        }
+        public void DeleteBook(Book book)
+        {
+            repository.DeleteBook(book);
+        }
+        public void DeleteEvent(Event ev)
+        {
+            repository.DeleteEvent(ev);
+        }
+        public void DeleteBookCondition(BookCondition condition)
+        {
+            repository.DeleteBookCondition(condition);
+        }
+        #endregion Deleters
     }
 }

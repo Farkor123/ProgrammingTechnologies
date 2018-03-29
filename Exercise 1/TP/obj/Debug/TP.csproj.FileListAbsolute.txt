@@ -4,3 +4,9 @@ C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.csprojResolveAssemblyReferenc
 C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.csproj.CoreCompileInputs.cache
 C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.dll
 C:\Users\Farkor123\source\repos\TP\TP\obj\Debug\TP.pdb
+D:\ulmo\Studia\ProgrammingTechnologies\Exercise 1\TP\obj\Debug\TP.csprojResolveAssemblyReference.cache
+D:\ulmo\Studia\ProgrammingTechnologies\Exercise 1\TP\obj\Debug\TP.csproj.CoreCompileInputs.cache
+D:\ulmo\Studia\ProgrammingTechnologies\Exercise 1\TP\obj\Debug\TP.dll
+D:\ulmo\Studia\ProgrammingTechnologies\Exercise 1\TP\obj\Debug\TP.pdb
+D:\ulmo\Studia\ProgrammingTechnologies\Exercise 1\TP\bin\Debug\TP.dll
+D:\ulmo\Studia\ProgrammingTechnologies\Exercise 1\TP\bin\Debug\TP.pdb

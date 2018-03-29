@@ -7,7 +7,7 @@ namespace TP
     {
         private DataContext dataContext;
         private IDataFiller filler;
-        public delegate void MyDelegate();
+        public delegate void MyDelegate(EventArgs args);
         public event MyDelegate OnEventChanged;
 
         public DataRepository(DataContext dc, IDataFiller idf)
@@ -16,7 +16,7 @@ namespace TP
             dataContext = dc;
             dataContext.eventObservableCollection.CollectionChanged += (sender, e) =>
             {
-                OnEventChanged?.Invoke();
+                OnEventChanged?.Invoke(e);
             };
         }
 
@@ -88,7 +88,7 @@ namespace TP
 
         #endregion bookControl
 
-        #region bookCondiotionControl
+        #region bookConditionControl
         public void AddBookCondition(BookCondition bc)
         {
             dataContext.bookConditionList.Add(bc);
