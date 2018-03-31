@@ -52,6 +52,7 @@
     <Compile Include="Event.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="IDataFiller.cs" />
+    <Compile Include="RandomFiller.cs" />
     <Compile Include="JSONFiller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
