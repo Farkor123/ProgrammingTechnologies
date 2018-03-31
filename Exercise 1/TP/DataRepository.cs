@@ -167,15 +167,11 @@ namespace TP
 
         public void DeleteClient(Client client)
         {
-            foreach (var clientt in dataContext.clientList)
+            bool removed = dataContext.clientList.Remove(client);
+            if (removed == false)
             {
-                if (clientt == client)
-                {
-                    dataContext.clientList.Remove(client);
-                    return;
-                }
+                throw new Exception("No such client.");
             }
-            throw new Exception("No such client.");
         }
 
         public void DeleteClient(string _id)

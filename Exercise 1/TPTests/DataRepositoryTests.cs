@@ -32,6 +32,14 @@ namespace TP.Tests
             }
             return list;
         }
+        private List<Client> MakeClientList()
+        {
+            Random rand = new Random();
+            List<Client> list = new List<Client>();
+            list.Add(new Client("Test", "McTest" ,"0"));
+            list.Add(new Client("Test", "Testowsky", "1"));
+            return list;
+        }
         #endregion TestHelpers
 
         [TestInitialize]
@@ -209,5 +217,100 @@ namespace TP.Tests
             dataRepository.GetBook(0);
         }
         #endregion BookConditionTests
+
+        #region ClientTests
+        [TestMethod()]
+        public void AddClientTest()
+        {
+            Client testClient = new Client("Test", "McTest", "0");
+            dataRepository.AddClient(testClient);
+            Assert.AreEqual(testClient, dataRepository.GetClient(0));
+        }
+
+        [TestMethod()]
+        public void GetAllClientsTest()
+        {
+            List<Client> testList = MakeClientList();
+            foreach (var client in testList)
+            {
+                dataRepository.AddClient(client);
+            }
+
+            IEnumerable<Client> result = dataRepository.GetAllClients();
+            int i = 0;
+            foreach (var client in result)
+            {
+                Assert.AreEqual(testList[i], client);
+                i++;
+            }
+        }
+
+        [TestMethod()]
+        public void GetClientsAmountTest()
+        {
+            List<Client> testList = MakeClientList();
+            foreach (var client in testList)
+            {
+                dataRepository.AddClient(client);
+            }
+
+            Assert.AreEqual(2, dataRepository.GetClientsAmount());
+        }
+
+        [TestMethod()]
+        public void GetClientByIdTest()
+        {
+            Client testClient = new Client("Test", "McTest", "2137");
+            dataRepository.AddClient(testClient);
+            Assert.AreEqual(testClient, dataRepository.GetClient("2137"));
+        }
+
+        [TestMethod()]
+        public void DeleteClientByIdTest()
+        {
+            List<Client> testList = MakeClientList();
+            foreach (var client in testList)
+            {
+                dataRepository.AddClient(client);
+            }
+            string id = testList[0].ID;
+            dataRepository.DeleteClient(id);
+
+            try
+            {
+                dataRepository.GetClient(id);
+            } catch (Exception e)
+            {
+                if (e.Message != "No such client.")
+                {
+                    Assert.Fail();
+                }
+            }
+        }
+
+        [TestMethod()]
+        public void DeleteClientByClientTest()
+        {
+            List<Client> testList = MakeClientList();
+            foreach (var client in testList)
+            {
+                dataRepository.AddClient(client);
+            }
+            Client testClient = testList[0];
+            dataRepository.DeleteClient(testClient);
+
+            try
+            {
+                dataRepository.GetClient(testClient.ID);
+            }
+            catch (Exception e)
+            {
+                if (e.Message != "No such client.")
+                {
+                    Assert.Fail();
+                }
+            }
+        }
+        #endregion ClientTests
     }
 }
