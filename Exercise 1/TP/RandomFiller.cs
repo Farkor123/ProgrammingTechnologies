@@ -5,10 +5,21 @@ namespace TP
     public class RandomFiller : IDataFiller
     {
         private int numberOfEntries;
-        public RandomFiller(int NOE)
+        private int numberOfClients;
+        public RandomFiller(int _numberOfEntries, int _numberOfClients)
         {
-            numberOfEntries = NOE;
+            numberOfEntries = _numberOfEntries;
+            numberOfClients = _numberOfClients;
         }
+
+        public RandomFiller()
+        {
+            numberOfEntries = 10;
+            numberOfClients = 10;
+        }
+
+        public int NumberOfEntries { get => numberOfEntries; set => numberOfEntries = value; }
+        public int NumberOfClients { get => numberOfClients; set => numberOfClients = value; }
 
         public void Fill(DataContext data)
         {
@@ -24,14 +35,14 @@ namespace TP
             {
                 data.bookConditionList.Add(new BookCondition(book));
             }
-            for (int i = 0; i < numberOfEntries/100+10; i++)
+            for (int i = 0; i < numberOfClients; i++)
             {
                 data.clientList.Add(new Client(names[rand.Next(7)], surnames[rand.Next(7)], i.ToString()));
             }
-            foreach (var client in data.clientList)
+            foreach (var bc in data.bookConditionList)
             {
-                data.eventObservableCollection.Add(new Event(Event.Type.Borrow, data.bookConditionList[rand.Next(numberOfEntries)], client));
-                data.eventObservableCollection.Add(new Event(Event.Type.Return, data.bookConditionList[rand.Next(numberOfEntries)], client));
+                data.eventObservableCollection.Add(new Event(Event.Type.Borrow, bc, data.clientList[rand.Next(numberOfClients)]));
+                data.eventObservableCollection.Add(new Event(Event.Type.Return, bc, data.clientList[rand.Next(numberOfClients)]));
             }
         }
     }
