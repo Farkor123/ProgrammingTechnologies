@@ -101,7 +101,7 @@ namespace TP
         {
             return dataContext.bookConditionList;
         }
-        public int GetBooksCondiotionsAmount()
+        public int GetBooksConditionsAmount()
         {
             return dataContext.bookConditionList.Count;
         }

@@ -13,6 +13,7 @@ namespace TP.Tests
     {
         DataRepository dataRepository;
 
+        #region TestsHelpers
         private List<Book> MakeBookList()
         {
             Random rand = new Random();
@@ -21,6 +22,17 @@ namespace TP.Tests
             list.Add(new Book("Test Author 2", rand.Next(1000, 10000).ToString(), "Test Title 2", "2020"));
             return list;
         }
+        private List<BookCondition> MakeBookConditionList()
+        {
+            Random rand = new Random();
+            List<BookCondition> list = new List<BookCondition>();
+            foreach (var book in MakeBookList())
+            {
+                list.Add(new BookCondition(book));
+            }
+            return list;
+        }
+        #endregion TestHelpers
 
         [TestInitialize]
         public void Initialize()
@@ -28,6 +40,7 @@ namespace TP.Tests
             dataRepository = new DataRepository(new DataContext(), new ConstantFiller());
         }
 
+        #region BookTests
         [TestMethod()]
         public void AddBookTest()
         {
@@ -110,5 +123,91 @@ namespace TP.Tests
 
             dataRepository.GetBook(0);
         }
+        #endregion BookTests
+
+        #region BookConditionTests
+        [TestMethod()]
+        public void AddBookConditionTest()
+        {
+            BookCondition testBC = new BookCondition(new Book("Test Author", "1234567890", "Test Title", "2019"));
+            dataRepository.AddBookCondition(testBC);
+            Assert.AreEqual(testBC, dataRepository.GetBookCondition(0));
+        }
+
+        [TestMethod()]
+        public void GetAllBooksConditionsTest()
+        {
+            List<BookCondition> testList = MakeBookConditionList();
+            foreach (var bc in testList)
+            {
+                dataRepository.AddBookCondition(bc);
+            }
+
+            IEnumerable<BookCondition> result = dataRepository.GetAllBooksConditions();
+            int i = 0;
+            foreach (var bc in result)
+            {
+                Assert.AreEqual(testList[i], bc);
+                i++;
+            }
+        }
+
+        [TestMethod()]
+        public void GetBooksConditionsAmountTest()
+        {
+            List<BookCondition> testList = MakeBookConditionList();
+            foreach (var bc in testList)
+            {
+                dataRepository.AddBookCondition(bc);
+            }
+
+            Assert.AreEqual(2, dataRepository.GetBooksConditionsAmount());
+        }
+
+        [TestMethod()]
+        public void UpdateBookConditionTest()
+        {
+            List<BookCondition> testList = MakeBookConditionList();
+            foreach (var bc in testList)
+            {
+                dataRepository.AddBookCondition(bc);
+            }
+            BookCondition testBC = new BookCondition(new Book("Test 3", "1234567890", "Test 3", "1999"));
+            int bcNumber = 0;
+            dataRepository.UpdateBookCondition(bcNumber, testBC);
+
+            Assert.AreEqual(testBC, dataRepository.GetBookCondition(bcNumber));
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void DeleteBookConditionByKeyTest()
+        {
+            List<BookCondition> testList = MakeBookConditionList();
+            foreach (var bc in testList)
+            {
+                dataRepository.AddBookCondition(bc);
+            }
+            int bcNumber = testList.Count() - 1;
+            dataRepository.DeleteBookCondition(bcNumber);
+
+            dataRepository.GetBook(bcNumber);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void DeleteBookConditionByBCTest()
+        {
+            List<BookCondition> testList = MakeBookConditionList();
+            foreach (var bc in testList)
+            {
+                dataRepository.AddBookCondition(bc);
+            }
+            BookCondition testBC = dataRepository.GetBookCondition(0);
+            dataRepository.DeleteBookCondition(testBC);
+
+            dataRepository.GetBook(0);
+        }
+        #endregion BookConditionTests
     }
 }
