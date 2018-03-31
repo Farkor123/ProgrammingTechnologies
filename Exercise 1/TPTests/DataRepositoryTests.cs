@@ -36,8 +36,15 @@ namespace TP.Tests
         {
             Random rand = new Random();
             List<Client> list = new List<Client>();
-            list.Add(new Client("Test", "McTest" ,"0"));
+            list.Add(new Client("Test", "McTest", "0"));
             list.Add(new Client("Test", "Testowsky", "1"));
+            return list;
+        }
+        private List<Event> MakeEventList()
+        {
+            List<Event> list = new List<Event>();
+            list.Add(new Event(Event.Type.Borrow, new BookCondition(new Book("x", "0", "y", "1")), new Client("A", "B", "0")));
+            list.Add(new Event(Event.Type.Return, new BookCondition(new Book("z", "1", "w", "2")), new Client("D", "C", "1")));
             return list;
         }
         #endregion TestHelpers
@@ -312,5 +319,74 @@ namespace TP.Tests
             }
         }
         #endregion ClientTests
+
+        #region EventTests
+        [TestMethod()]
+        public void AddEventTest()
+        {
+            Event testEvent = new Event(Event.Type.Borrow, new BookCondition(new Book("", "", "", "")), new Client("", "", ""));
+            dataRepository.AddEvent(testEvent);
+            Assert.AreEqual(testEvent, dataRepository.GetEvent(0));
+        }
+
+        [TestMethod()]
+        public void GetAllEventsTest()
+        {
+            List<Event> testList = MakeEventList();
+            foreach (var _event in testList)
+            {
+                dataRepository.AddEvent(_event);
+            }
+
+            IEnumerable<Event> result = dataRepository.GetAllEvents();
+            int i = 0;
+            foreach (var _event in result)
+            {
+                Assert.AreEqual(testList[i], _event);
+                i++;
+            }
+        }
+
+        [TestMethod()]
+        public void GetEventsAmountTest()
+        {
+            List<Event> testList = MakeEventList();
+            foreach (var _event in testList)
+            {
+                dataRepository.AddEvent(_event);
+            }
+
+            Assert.AreEqual(2, dataRepository.GetEventsAmount());
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void DeleteEventByIdTest()
+        {
+            List<Event> testList = MakeEventList();
+            foreach (var _event in testList)
+            {
+                dataRepository.AddEvent(_event);
+            }
+            dataRepository.DeleteEvent(1);
+
+            dataRepository.GetEvent(1);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void DeleteEventByEventTest()
+        {
+            List<Event> testList = MakeEventList();
+            foreach (var _event in testList)
+            {
+                dataRepository.AddEvent(_event);
+            }
+            Event testEvent = testList[1];
+            dataRepository.DeleteEvent(testEvent);
+
+            dataRepository.GetEvent(1);
+        }
+        #endregion EventTests
     }
 }

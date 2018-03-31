@@ -31,12 +31,10 @@ namespace TP
             get => action;
             set
             {
-                Console.WriteLine(value);
                 switch(value)
                 {
                     case Type.Borrow:
                         var x = BookCondition.Conditions.Unavailable;
-                        Console.WriteLine(BookCondition);
                         BookCondition.Condition = x;//BookCondition.Conditions.Unavailable;
                         break;
                     case Type.Return:
