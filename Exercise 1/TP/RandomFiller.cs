@@ -2,10 +2,13 @@
 
 namespace TP
 {
+    // Adds numberOfEntries books, bookConditions, 
+    // 2x numberOfEntries events and numberOfClients clients
     public class RandomFiller : IDataFiller
     {
         private int numberOfEntries;
         private int numberOfClients;
+
         public RandomFiller(int _numberOfEntries, int _numberOfClients)
         {
             numberOfEntries = _numberOfEntries;
@@ -41,8 +44,9 @@ namespace TP
             }
             foreach (var bc in data.bookConditionList)
             {
-                data.eventObservableCollection.Add(new Event(Event.Type.Borrow, bc, data.clientList[rand.Next(numberOfClients)]));
-                data.eventObservableCollection.Add(new Event(Event.Type.Return, bc, data.clientList[rand.Next(numberOfClients)]));
+                Client client = data.clientList[rand.Next(numberOfClients)];
+                data.eventObservableCollection.Add(new Event(Event.Type.Borrow, bc, client));
+                data.eventObservableCollection.Add(new Event(Event.Type.Return, bc, client));
             }
         }
     }

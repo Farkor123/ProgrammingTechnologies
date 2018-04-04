@@ -4,7 +4,7 @@ using System;
 
 namespace TP
 {
-    class DataService
+    public class DataService
     {
         private DataRepository repository;
         public event MyDelegate OnEventChanged;
