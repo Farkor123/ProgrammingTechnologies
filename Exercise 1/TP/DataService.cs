@@ -1,5 +1,6 @@
 ﻿using static TP.DataRepository;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System;
 
 namespace TP
@@ -18,7 +19,13 @@ namespace TP
             };
             OnEventChanged = (args) =>
             {
-                Console.WriteLine(args);
+                NotifyCollectionChangedEventArgs eventArgs = (NotifyCollectionChangedEventArgs)args;
+                string added = "";
+                foreach (var item in eventArgs.NewItems)
+                {
+                    added += item.ToString() + ";";
+                }
+                Console.WriteLine(added);
             };
         }
 

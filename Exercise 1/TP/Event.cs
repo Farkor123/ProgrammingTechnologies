@@ -51,5 +51,10 @@ namespace TP
 
         public DateTime Date { get => date; set => date = value; }
 
+        public override string ToString()
+        {
+            return "Event(" + action + ", " + bookCondition.Book + ", " + client + ", " + date + ")";
+        }
+
     }
 }

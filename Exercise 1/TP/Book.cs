@@ -25,5 +25,10 @@
         public string Title { get => title; set => title = value; }
 
         public string Year { get => year; set => year = value; }
+
+        public override string ToString()
+        {
+            return "Book(" + author + ", " + title + ", " + isbn + ")";
+        }
     }
 }
