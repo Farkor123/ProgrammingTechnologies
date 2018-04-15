@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TP
 {
@@ -32,7 +33,7 @@ namespace TP
 
         public void AddBook(Book book)
         {
-            dataContext.bookDictionary.Add((int)dataContext.bookDictionary.Count, book);
+            dataContext.bookDictionary.Add(dataContext.bookDictionary.Last().Key, book);
         }
 
         public Book GetBook(int id)

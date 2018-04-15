@@ -1,6 +1,8 @@
-﻿namespace TP
+﻿using System.Collections.Generic;
+
+namespace TP
 {
-    public class Client
+    public class Client : ISerializablable
     {
         private string firstName;
 
@@ -20,6 +22,16 @@
         public string ID { get => id; set => id = value; }
 
         public string LastName { get => lastName; set => lastName = value; }
+
+        public void Deserialize(List<string> fields)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetSerializationString(Serializator serializator)
+        {
+            return "Client," + firstName + "," + lastName + "," + id;
+        }
 
         public override string ToString()
         {

@@ -55,6 +55,7 @@
     <Compile Include="DataServiceTests.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

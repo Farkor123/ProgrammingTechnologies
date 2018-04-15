@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TP
 {
-    public class Event
+    public class Event : ISerializablable
     {
         public enum Type
         {
@@ -56,5 +57,19 @@ namespace TP
             return "Event(" + action + ", " + bookCondition.Book + ", " + client + ", " + date + ")";
         }
 
+        public string GetSerializationString(Serializator serializator)
+        {
+            serializator.Add(Client);
+            serializator.Add(BookCondition);
+            return "Event," + action.ToString()
+                + "," + serializator.GetID(bookCondition)
+                + "," + serializator.GetID(client)
+                + "," + date.ToString();
+        }
+
+        public void Deserialize(List<string> fields)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
