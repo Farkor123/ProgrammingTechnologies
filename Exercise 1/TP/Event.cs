@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TP
 {
-    public class Event : ISerializablable
+    public class Event : ICustomSerializable
     {
         public enum Type
         {

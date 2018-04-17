@@ -2,7 +2,7 @@
 
 namespace TP
 {
-    public class Client : ISerializablable
+    public class Client : ICustomSerializable
     {
         private string firstName;
 

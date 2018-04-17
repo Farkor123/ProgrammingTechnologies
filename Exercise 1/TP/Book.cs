@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TP
 {
-    public class Book : ISerializablable
+    public class Book : ICustomSerializable
     {
         private string author;
 

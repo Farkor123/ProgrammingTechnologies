@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP
 {
-    public interface ISerializablable
+    public interface ICustomSerializable
     {
         string GetSerializationString(Serializator serializator);
         void Deserialize(List<string> fields, Serializator serializator);

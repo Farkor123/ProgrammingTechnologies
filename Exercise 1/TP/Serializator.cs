@@ -13,7 +13,7 @@ namespace TP
         private ObjectIDGenerator idGenerator;
         string serializationString;
         string serializationData;
-        Dictionary<long, ISerializablable> readObjects;
+        Dictionary<long, ICustomSerializable> readObjects;
         int readingIndex;
         public Serializator()
         {
@@ -57,14 +57,14 @@ namespace TP
             return index;
         }
 
-        public ISerializablable GetObject(string id)
+        public ICustomSerializable GetObject(string id)
         {
             return GetObject(ParseID(id));
         }
 
-        public ISerializablable GetObject(long id)
+        public ICustomSerializable GetObject(long id)
         {
-            ISerializablable obj;
+            ICustomSerializable obj;
             bool gettingDictionaryItemWasSuccesfull = readObjects.TryGetValue(id, out obj);
             if (gettingDictionaryItemWasSuccesfull)
             {
@@ -73,14 +73,14 @@ namespace TP
             List<string> des = GetObjectStringList(id);
 
             Type t = Type.GetType("TP." + des[0]);
-            ISerializablable c = (ISerializablable)Activator.CreateInstance(t);
+            ICustomSerializable c = (ICustomSerializable)Activator.CreateInstance(t);
             c.Deserialize(des, this);
             readObjects.Add(id, c);
 
             return c;
         }
 
-        public void Add(ISerializablable obj, bool main = true)
+        public void Add(ICustomSerializable obj, bool main = true)
         {
             bool notExists;
             long id = idGenerator.GetId(obj, out notExists);
@@ -96,7 +96,7 @@ namespace TP
 
         public void Read()
         {
-            readObjects = new Dictionary<long, ISerializablable>();
+            readObjects = new Dictionary<long, ICustomSerializable>();
             objectDictionary = new Dictionary<long, string>();
             foreach (string s in serializationData.Split(new char[] { ';' }))
             {
@@ -130,7 +130,7 @@ namespace TP
             }
         }
 
-        public ISerializablable GetNext()
+        public ICustomSerializable GetNext()
         { 
             return GetObject(serializationString.Split(new char[] { ',' })[readingIndex++]);
         }

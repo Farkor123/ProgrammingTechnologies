@@ -2,7 +2,7 @@
 
 namespace TP
 {
-    public class BookCondition : ISerializablable
+    public class BookCondition : ICustomSerializable
     {
         public enum Conditions
         {
