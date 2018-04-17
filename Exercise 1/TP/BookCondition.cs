@@ -26,7 +26,7 @@ namespace TP
 
         public string GetSerializationString(Serializator serializator)
         {
-            serializator.Add(book);
+            serializator.Add(book, false);
             return "BookCondition," + serializator.GetID(book) + "," + Condition.ToString();
         }
 

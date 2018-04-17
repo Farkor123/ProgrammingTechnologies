@@ -10,6 +10,8 @@ namespace TP
 
         private string lastName;
 
+        public Client() { }
+
         public Client(string _firstName, string _lastName, string _id)
         {
             FirstName = _firstName;
@@ -25,7 +27,9 @@ namespace TP
 
         public void Deserialize(List<string> fields)
         {
-            throw new System.NotImplementedException();
+            firstName = fields[1];
+            lastName = fields[2];
+            id = fields[3];
         }
 
         public string GetSerializationString(Serializator serializator)

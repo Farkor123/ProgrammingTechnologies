@@ -59,8 +59,8 @@ namespace TP
 
         public string GetSerializationString(Serializator serializator)
         {
-            serializator.Add(Client);
-            serializator.Add(BookCondition);
+            serializator.Add(Client, false);
+            serializator.Add(BookCondition, false);
             return "Event," + action.ToString()
                 + "," + serializator.GetID(bookCondition)
                 + "," + serializator.GetID(client)

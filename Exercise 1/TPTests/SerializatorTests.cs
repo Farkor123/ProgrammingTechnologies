@@ -12,23 +12,39 @@ namespace TP.Tests
     public class SerializatorTests
     {
         [TestMethod()]
-        public void DeserTest()
+        public void SimpleTypesSerializationTest()
         {
-            Serializator s = new Serializator();
-            Book b = new Book("A", "B", "C", "D");
-            s.Add(b, true);
-            s.Read();
-            Book c = (Book)s.GetNext();
-            Assert.AreEqual(b.ToString(), c.ToString());
+            Serializator ser = new Serializator();
+            Book bookOrig = new Book("A", "B", "C", "D");
+            Client clientOrig = new Client("A", "B", "C");
+            ser.Add(bookOrig);
+            ser.Add(clientOrig);
+            ser.Write();
+
+            ser.Read();
+            Book bookNew = (Book)ser.GetNext();
+            Client clientNew = (Client)ser.GetNext();
+
+            Assert.AreEqual(bookOrig.ToString(), bookNew.ToString());
+            Assert.AreEqual(clientOrig.ToString(), clientNew.ToString());
         }
 
         [TestMethod()]
-        public void PrintTest()
+        public void ComplexTypesSerializationTest()
         {
-            Serializator s = new Serializator();
-            DataRepository dataRepository = new DataRepository(new DataContext(), new ConstantFiller());
-            dataRepository.UseFiller();
-            s.Print();
+            Serializator ser = new Serializator();
+            Book bookOrig = new Book("A", "B", "C", "D");
+            ser.Add(bookOrig);
+            ser.Read();
+            Book bookNew = (Book)ser.GetNext();
+            Assert.AreEqual(bookOrig.ToString(), bookNew.ToString());
+
+            ser = new Serializator();
+            Client clientOrig = new Client("A", "B", "C");
+            ser.Add(clientOrig);
+            ser.Read();
+            Client clientNew = (Client)ser.GetNext();
+            Assert.AreEqual(clientOrig.ToString(), clientNew.ToString());
         }
     }
 }

@@ -12,7 +12,8 @@ namespace TP
         private Dictionary<long, string> objectDictionary;
         private ObjectIDGenerator idGenerator;
         string serializationString;
-        List<string> readObjects;
+        string serializationData;
+        Dictionary<long, ISerializablable> readObjects;
         int readingIndex;
         public Serializator()
         {
@@ -32,7 +33,54 @@ namespace TP
             return idGenerator.GetId(obj, out firstTime);
         }
 
-        public void Add(ISerializablable obj, bool main = false)
+        public List<string> GetObjectStringList(long id)
+        {
+            string value;
+            objectDictionary.TryGetValue(id, out value);
+            List<string> des = new List<string>();
+            foreach (string s in value.Split(new char[] { ',' }))
+            {
+                des.Add(s);
+            }
+            return des;
+        }
+
+        public List<string> GetObjectStringList(string id)
+        {
+            return GetObjectStringList(ParseID(id));
+        }
+
+        private long ParseID(string id)
+        {
+            long index;
+            Int64.TryParse(id, out index);
+            return index;
+        }
+
+        public ISerializablable GetObject(string id)
+        {
+            return GetObject(ParseID(id));
+        }
+
+        public ISerializablable GetObject(long id)
+        {
+            ISerializablable obj;
+            bool gettingDictionaryItemWasSuccesfull = readObjects.TryGetValue(id, out obj);
+            if (gettingDictionaryItemWasSuccesfull)
+            {
+                return obj;
+            }
+            List<string> des = GetObjectStringList(id);
+
+            Type t = Type.GetType("TP." + des[0]);
+            ISerializablable c = (ISerializablable)Activator.CreateInstance(t);
+
+            c.Deserialize(des);
+
+            return c;
+        }
+
+        public void Add(ISerializablable obj, bool main = true)
         {
             bool notExists;
             long id = idGenerator.GetId(obj, out notExists);
@@ -48,33 +96,43 @@ namespace TP
 
         public void Read()
         {
-            readObjects = new List<string>();
-            foreach (string s in serializationString.Split(new char[] { ',' }))
+            readObjects = new Dictionary<long, ISerializablable>();
+            objectDictionary = new Dictionary<long, string>();
+            foreach (string s in serializationData.Split(new char[] { ';' }))
             {
-                readObjects.Add(s);
+                string desc = "";
+                int counter = -1;
+                foreach (string it in s.Split(new char[] { ',' }))
+                {
+                    counter++;
+                    if(counter == 0) //id
+                    {
+                        continue;
+                    }
+                    if(counter != 1)
+                    {
+                        desc += ",";
+                    }
+                    desc += it;
+                    
+                }
+                objectDictionary.Add(ParseID(s.Split(new char[] { ',' })[0]), desc);
             }
             readingIndex = 0;
         }
 
-        public ISerializablable GetNext()
+        public void Write()
         {
-            int index;
-            Int32.TryParse(readObjects[readingIndex], out index);
-            string value;
-            objectDictionary.TryGetValue(index, out value);
-
-            List<string> des = new List<string>();
-            foreach(string s in value.Split(new char[] { ',' }))
+            serializationData = "";
+            foreach(var it in objectDictionary)
             {
-                des.Add(s);
+                serializationData += it.Key.ToString() + "," + it.Value + ";";
             }
+        }
 
-            Type t = Type.GetType("TP." + des[0]);
-            ISerializablable c = (ISerializablable)Activator.CreateInstance(t);
-
-            c.Deserialize(des);
-            readingIndex++;
-            return c;
+        public ISerializablable GetNext()
+        { 
+            return GetObject(serializationString.Split(new char[] { ',' })[readingIndex++]);
         }
 
         public void Print()

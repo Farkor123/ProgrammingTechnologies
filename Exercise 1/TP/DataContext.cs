@@ -24,25 +24,25 @@ namespace TP
             ret += "clientList,";
             foreach(var c in clientList)
             {
-                serializator.Add(c);
+                serializator.Add(c, false);
                 ret += serializator.GetID(c) + ",";
             }
             ret += "bookDictionary,";
             foreach (var b in bookDictionary)
             {
-                serializator.Add(b.Value);
+                serializator.Add(b.Value, false);
                 ret += b.Key.ToString() + "," + serializator.GetID(b.Value) + ",";
             }
             ret += "eventObservableCollection,";
             foreach (var e in eventObservableCollection)
             {
-                serializator.Add(e);
+                serializator.Add(e, false);
                 ret += serializator.GetID(e) + ",";
             }
             ret += "bookConditionList,";
             foreach (var bc in bookConditionList)
             {
-                serializator.Add(bc);
+                serializator.Add(bc, false);
                 ret += serializator.GetID(bc) + ",";
             }
             return ret;
