@@ -19,6 +19,8 @@ namespace TP
 
         private DateTime date;
 
+        public Event() { }
+
         public Event(Type _action, BookCondition _bookCondition, Client _client)
         {
             BookCondition = _bookCondition;
@@ -67,9 +69,19 @@ namespace TP
                 + "," + date.ToString();
         }
 
-        public void Deserialize(List<string> fields)
+        public void Deserialize(List<string> fields, Serializator serializator)
         {
-            throw new NotImplementedException();
+            if(fields[1] == "Borrow")
+            {
+                action = Type.Borrow;
+            }
+            else
+            {
+                action = Type.Return;
+            }
+            bookCondition = (BookCondition)serializator.GetObject(fields[2]);
+            client = (Client)serializator.GetObject(fields[3]);
+            date = DateTime.Parse(fields[4]);
         }
     }
 }

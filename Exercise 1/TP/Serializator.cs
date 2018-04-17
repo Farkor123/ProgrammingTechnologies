@@ -74,8 +74,8 @@ namespace TP
 
             Type t = Type.GetType("TP." + des[0]);
             ISerializablable c = (ISerializablable)Activator.CreateInstance(t);
-
-            c.Deserialize(des);
+            c.Deserialize(des, this);
+            readObjects.Add(id, c);
 
             return c;
         }

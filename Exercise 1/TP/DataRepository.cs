@@ -33,7 +33,14 @@ namespace TP
 
         public void AddBook(Book book)
         {
-            dataContext.bookDictionary.Add(dataContext.bookDictionary.Last().Key, book);
+            try
+            {
+                dataContext.bookDictionary.Add(dataContext.bookDictionary.Last().Key + 1, book);
+            }
+            catch(InvalidOperationException)
+            {
+                dataContext.bookDictionary.Add(0, book);
+            }
         }
 
         public Book GetBook(int id)

@@ -9,6 +9,6 @@ namespace TP
     public interface ISerializablable
     {
         string GetSerializationString(Serializator serializator);
-        void Deserialize(List<string> fields);
+        void Deserialize(List<string> fields, Serializator serializator);
     }
 }

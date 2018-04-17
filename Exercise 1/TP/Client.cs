@@ -25,7 +25,7 @@ namespace TP
 
         public string LastName { get => lastName; set => lastName = value; }
 
-        public void Deserialize(List<string> fields)
+        public void Deserialize(List<string> fields, Serializator serializator)
         {
             firstName = fields[1];
             lastName = fields[2];

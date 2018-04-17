@@ -48,7 +48,7 @@ namespace TP
             return ret;
         }
 
-        public void Deserialize(List<string> fields)
+        public void Deserialize(List<string> fields, Serializator serializator)
         {
             throw new System.NotImplementedException();
         }

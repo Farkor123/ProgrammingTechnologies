@@ -33,18 +33,19 @@ namespace TP.Tests
         public void ComplexTypesSerializationTest()
         {
             Serializator ser = new Serializator();
-            Book bookOrig = new Book("A", "B", "C", "D");
-            ser.Add(bookOrig);
-            ser.Read();
-            Book bookNew = (Book)ser.GetNext();
-            Assert.AreEqual(bookOrig.ToString(), bookNew.ToString());
+            BookCondition bcOrig = new BookCondition(new Book("A", "B", "C", "D"));
+            Event eventOrig = new Event(Event.Type.Borrow, bcOrig, new Client("X", "Y", "Z"));
+            ser.Add(bcOrig);
+            ser.Add(eventOrig);
+            ser.Write();
 
-            ser = new Serializator();
-            Client clientOrig = new Client("A", "B", "C");
-            ser.Add(clientOrig);
             ser.Read();
-            Client clientNew = (Client)ser.GetNext();
-            Assert.AreEqual(clientOrig.ToString(), clientNew.ToString());
+            BookCondition bcNew = (BookCondition)ser.GetNext();
+            Event eventNew = (Event)ser.GetNext();
+            Assert.AreEqual(bcOrig.ToString(), bcNew.ToString());
+            Assert.AreEqual(eventOrig.ToString(), eventNew.ToString());
+            Assert.AreSame(bcNew.Book, eventNew.BookCondition.Book);
+            Assert.AreSame(bcNew, eventNew.BookCondition);
         }
     }
 }

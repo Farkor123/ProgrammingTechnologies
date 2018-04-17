@@ -14,6 +14,7 @@ namespace TP
 
         private Book book;
 
+        public BookCondition() { }
         public BookCondition(Book _book)
         {
             Condition = Conditions.Available;
@@ -30,9 +31,17 @@ namespace TP
             return "BookCondition," + serializator.GetID(book) + "," + Condition.ToString();
         }
 
-        public void Deserialize(List<string> fields)
+        public void Deserialize(List<string> fields, Serializator serializator)
         {
-            throw new System.NotImplementedException();
+            book = (Book)serializator.GetObject(fields[1]);
+            if(fields[2] == "Available")
+            {
+                condition = Conditions.Available;
+            }
+            else
+            {
+                condition = Conditions.Unavailable;
+            }
         }
     }
 }

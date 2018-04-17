@@ -31,7 +31,7 @@ namespace TP
 
         public string Year { get => year; set => year = value; }
 
-        public void Deserialize(List<string> fields)
+        public void Deserialize(List<string> fields, Serializator serializator)
         {
             author = fields[1];
             isbn = fields[2];
