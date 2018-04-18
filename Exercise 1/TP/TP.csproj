@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="BookCondition.cs" />
+    <Compile Include="JSONSerializer.cs" />
     <Compile Include="ConstantFiller.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="DataRepository.cs" />

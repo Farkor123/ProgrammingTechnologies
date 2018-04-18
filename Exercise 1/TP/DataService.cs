@@ -39,6 +39,11 @@ namespace TP
             repository.Filler = df;
         }
 
+        public void JSONSerialize(String file)
+        {
+            repository.jser.Serialize(repository.dataContext, file);
+        }
+
         #region Getters
         public Book GetBook(int key)
         {

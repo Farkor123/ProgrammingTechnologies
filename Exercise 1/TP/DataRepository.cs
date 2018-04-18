@@ -6,11 +6,11 @@ namespace TP
 {
     public class DataRepository
     {
-        private DataContext dataContext;
+        public DataContext dataContext;
         private IDataFiller filler;
         public delegate void MyDelegate(EventArgs args);
         public event MyDelegate OnEventChanged;
-
+        public JSONSerializer jser;
         public DataRepository(DataContext dc, IDataFiller idf)
         {
             filler = idf;
