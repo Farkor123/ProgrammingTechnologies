@@ -14,38 +14,52 @@ namespace TP.Tests
         [TestMethod()]
         public void SimpleTypesSerializationTest()
         {
-            Serializator ser = new Serializator();
+            string filename = "testWrite.txt";
             Book bookOrig = new Book("A", "B", "C", "D");
             Client clientOrig = new Client("A", "B", "C");
-            ser.Add(bookOrig);
-            ser.Add(clientOrig);
-            ser.Write();
+            {
+                Serializator ser = new Serializator();
+                ser.Add(bookOrig);
+                ser.Add(clientOrig);
+                ser.SetFilename(filename);
+                ser.Write();
+            }
+            {
+                Serializator ser = new Serializator();
+                ser.SetFilename(filename);
+                ser.Read();
+                Book bookNew = (Book)ser.GetNext();
+                Client clientNew = (Client)ser.GetNext();
 
-            ser.Read();
-            Book bookNew = (Book)ser.GetNext();
-            Client clientNew = (Client)ser.GetNext();
-
-            Assert.AreEqual(bookOrig.ToString(), bookNew.ToString());
-            Assert.AreEqual(clientOrig.ToString(), clientNew.ToString());
+                Assert.AreEqual(bookOrig.ToString(), bookNew.ToString());
+                Assert.AreEqual(clientOrig.ToString(), clientNew.ToString());
+            }
         }
 
         [TestMethod()]
         public void ComplexTypesSerializationTest()
         {
-            Serializator ser = new Serializator();
+            string filename = "complexTestWrite.txt";
             BookCondition bcOrig = new BookCondition(new Book("A", "B", "C", "D"));
             Event eventOrig = new Event(Event.Type.Borrow, bcOrig, new Client("X", "Y", "Z"));
-            ser.Add(bcOrig);
-            ser.Add(eventOrig);
-            ser.Write();
-
-            ser.Read();
-            BookCondition bcNew = (BookCondition)ser.GetNext();
-            Event eventNew = (Event)ser.GetNext();
-            Assert.AreEqual(bcOrig.ToString(), bcNew.ToString());
-            Assert.AreEqual(eventOrig.ToString(), eventNew.ToString());
-            Assert.AreSame(bcNew.Book, eventNew.BookCondition.Book);
-            Assert.AreSame(bcNew, eventNew.BookCondition);
+            {
+                Serializator ser = new Serializator();
+                ser.Add(bcOrig);
+                ser.Add(eventOrig);
+                ser.SetFilename(filename);
+                ser.Write();
+            }
+            {
+                Serializator ser = new Serializator();
+                ser.SetFilename(filename);
+                ser.Read();
+                BookCondition bcNew = (BookCondition)ser.GetNext();
+                Event eventNew = (Event)ser.GetNext();
+                Assert.AreEqual(bcOrig.ToString(), bcNew.ToString());
+                Assert.AreEqual(eventOrig.ToString(), eventNew.ToString());
+                Assert.AreSame(bcNew.Book, eventNew.BookCondition.Book);
+                Assert.AreSame(bcNew, eventNew.BookCondition);
+            }
         }
 
         [TestMethod()]

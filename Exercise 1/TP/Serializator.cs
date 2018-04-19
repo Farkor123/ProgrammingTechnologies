@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -9,10 +10,10 @@ namespace TP
 {
     public class Serializator
     {
+        string filename;
         private Dictionary<long, string> objectDictionary;
         private ObjectIDGenerator idGenerator;
         string serializationString;
-        string serializationData;
         Dictionary<long, ICustomSerializable> readObjects;
         int readingIndex;
         public Serializator()
@@ -96,6 +97,13 @@ namespace TP
 
         public void Read()
         {
+            string serializationData;
+            using (var file = new StreamReader(filename))
+            {
+                serializationString = file.ReadLine();
+                serializationData = file.ReadLine();
+            }
+
             readObjects = new Dictionary<long, ICustomSerializable>();
             objectDictionary = new Dictionary<long, string>();
             foreach (string s in serializationData.Split(new char[] { ';' }))
@@ -121,12 +129,23 @@ namespace TP
             readingIndex = 0;
         }
 
+        public void SetFilename(string fn)
+        {
+            filename = fn;
+        }
+
         public void Write()
         {
-            serializationData = "";
+            string serializationData = "";
             foreach(var it in objectDictionary)
             {
                 serializationData += it.Key.ToString() + "," + it.Value + ";";
+            }
+
+            using (var file = new StreamWriter(filename))
+            {
+                file.WriteLine(serializationString);
+                file.WriteLine(serializationData);
             }
         }
 
