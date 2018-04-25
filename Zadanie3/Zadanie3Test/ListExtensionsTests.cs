@@ -33,5 +33,18 @@ namespace Zadanie3Test
                 Assert.AreEqual(null, p.ProductSubcategoryID);
             }
         }
+
+        [TestMethod]
+        public void StringifyTest()
+        {
+            var list = GetProducts().GetRange(0, 10);
+
+            string result = list.Stringify();
+            //Console.Write(result);
+            foreach (var p in list)
+            {
+                Assert.IsTrue(result.Contains(p.Name));
+            }
+        }
     }
 }
