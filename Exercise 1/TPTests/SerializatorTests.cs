@@ -65,17 +65,24 @@ namespace TP.Tests
         [TestMethod()]
         public void DataContextSerializationTest()
         {
-            Serializator ser = new Serializator();
-            ConstantFiller filler = new ConstantFiller();
             DataContext dcOrig = new DataContext();
-            filler.Fill(dcOrig);
-            ser.Add(dcOrig);
-            ser.Write();
-
-            ser.Read();
-            DataContext dcNew = (DataContext)ser.GetNext();
-            Assert.AreEqual(dcOrig.bookDictionary[1].ToString(), dcNew.bookDictionary[1].ToString());
-            Assert.AreEqual(dcOrig.clientList.Count, dcNew.clientList.Count);
+            string filename = "dataContextTest.txt";
+            {
+                Serializator ser = new Serializator();
+                ConstantFiller filler = new ConstantFiller();
+                filler.Fill(dcOrig);
+                ser.Add(dcOrig);
+                ser.SetFilename(filename);
+                ser.Write();
+            }
+            {
+                Serializator ser = new Serializator();
+                ser.SetFilename(filename);
+                ser.Read();
+                DataContext dcNew = (DataContext)ser.GetNext();
+                Assert.AreEqual(dcOrig.bookDictionary[1].ToString(), dcNew.bookDictionary[1].ToString());
+                Assert.AreEqual(dcOrig.clientList.Count, dcNew.clientList.Count);
+            }
         }
     }
 }
