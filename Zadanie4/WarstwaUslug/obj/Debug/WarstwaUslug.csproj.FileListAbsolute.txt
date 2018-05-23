@@ -1,0 +1,9 @@
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\bin\Debug\WarstwaUslug.dll
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\bin\Debug\WarstwaUslug.pdb
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\bin\Debug\WarstwaDanych.dll
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\bin\Debug\WarstwaDanych.pdb
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\bin\Debug\WarstwaDanych.dll.config
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\obj\Debug\WarstwaUslug.csprojResolveAssemblyReference.cache
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\obj\Debug\WarstwaUslug.csproj.CoreCompileInputs.cache
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\obj\Debug\WarstwaUslug.dll
+C:\Users\Farkor123\Downloads\tags\tags\Zadanie4\WarstwaUslug\obj\Debug\WarstwaUslug.pdb

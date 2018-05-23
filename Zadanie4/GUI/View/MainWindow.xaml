@@ -1,0 +1,79 @@
+﻿<Window x:Class="GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="Dostawcy" Height="500" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        
+        <ListView Grid.Column="0" ItemsSource="{Binding VendorList}" SelectedItem="{Binding SelectedItem}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding Name}" TextAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Column="1">
+            <StackPanel>
+            <GroupBox Header="Info" Margin="50">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Stretch">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Margin" Value="0,3,0,3"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Text="ID"/>
+                            <TextBlock Text="Name"/>
+                            <TextBlock Text="Account Number"/>
+                            <TextBlock Text="Credit Rating"/>
+                            <TextBlock Text="Preferred Vendor Status"/>
+                            <TextBlock Text="Active Flag"/>
+                            <TextBlock Text="Web Service URL"/>
+                            <TextBlock Text="Modified Date"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Stretch">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Margin" Value="0,2,0,2"/>
+                        </Style>
+                    </StackPanel.Resources>
+                        <TextBox Text="{Binding SelectedItem.BusinessEntityID}"/>
+                        <TextBox Text="{Binding SelectedItem.Name}"/>
+                        <TextBox Text="{Binding SelectedItem.AccountNumber}"/>
+                        <TextBox Text="{Binding SelectedItem.CreditRating}"/>
+                        <TextBox Text="{Binding SelectedItem.PreferredVendorStatus}"/>
+                        <TextBox Text="{Binding SelectedItem.ActiveFlag}"/>
+                        <TextBox Text="{Binding SelectedItem.PurchasingWebServiceURL}"/>
+                        <TextBox Text="{Binding SelectedItem.ModifiedDate}"/>
+                </StackPanel>
+                    </Grid>
+                </GroupBox>
+                <StackPanel HorizontalAlignment="Stretch">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Margin" Value="0,5,0,5"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="Save changes" Width="100" Command="{Binding SaveChanges}"/>
+                    <Button Content="Create Vendor" Width="100" Command="{Binding CreateVendor}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
